@@ -33,7 +33,7 @@
       margin-bottom: 30px;
     }
 
-    #form, #reasons, #randomBox {
+    #form, #reasons {
       background: #222;
       padding: 20px;
       border-radius: 10px;
@@ -42,7 +42,7 @@
       transition: background 0.3s;
     }
 
-    .light #form, .light #reasons, .light #randomBox {
+    .light #form, .light #reasons {
       background: white;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
@@ -114,19 +114,13 @@
     <button onclick="addReason()">Ajouter</button>
   </div>
 
-  <div id="randomBox">
-    <h3>Accusation aléatoire</h3>
-    <p id="randomText" style="font-size:1.2em; font-weight:bold;"></p>
-    <button onclick="randomReason()">Nouvelle accusation aléatoire</button>
-  </div>
-
   <div id="reasons">
     <h3>Liste officielle des accusations (<span id="count"></span>)</h3>
     <div id="list"></div>
   </div>
 
   <script>
-    const BIN_ID = "6a9bc64bda38895dfe3b6d7f";
+    const BIN_ID = "6a9bd566f5f4af5e296d1e27";
 
     async function loadReasons() {
       const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
@@ -144,12 +138,6 @@
         div.textContent = r;
         list.appendChild(div);
       });
-
-      // Set random text initially
-      if (reasons.length > 0) {
-        document.getElementById("randomText").textContent =
-          reasons[Math.floor(Math.random() * reasons.length)];
-      }
     }
 
     async function addReason() {
@@ -171,13 +159,6 @@
 
       input.value = "";
       loadReasons();
-    }
-
-    function randomReason() {
-      const items = document.querySelectorAll(".reason");
-      if (items.length === 0) return;
-      const r = items[Math.floor(Math.random() * items.length)].textContent;
-      document.getElementById("randomText").textContent = r;
     }
 
     function toggleDark() {
